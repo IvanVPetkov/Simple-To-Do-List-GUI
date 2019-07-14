@@ -1,33 +1,41 @@
-import tkinter as tk                # Import tk
+# import all from tkinter
+from tkinter import *
 
-def writeFile():
+# create main window
+window = Tk()
+window.title('Simple-To-Do-List')
+window.geometry('300x200')
+
+# read the user input
+user_input = StringVar()
+
+# creates the entry box for the user input
+entry_box = Entry(window, textvariable=user_input, width=25).place(x=75, y=25)
+
+# creates a function which gets user's input and writes in on a file
+def write_File():
     file = open("ToDoList-DB.txt",'a+')
-    user_Input = el.get()
-    file.write(user_Input)
+    file.write(f'{user_input.get()} \n')
     file.close()
 
-def show_entry_fields():
-    print(e1.get())
-    writeFile()
+# this is a function which displays the user input
+def return_user_input():
+    result_Label.config(text=user_input.get())
 
-window = tk.Tk()                    # Create instance
-window.title("Simple TO-DO list")      # Add a title
-window.geometry("600x400")
+# This in the main function of Add button which prints user's input and also calls other functions
+def add_button():
+    print(user_input.get())
+    write_File()
+    return_user_input()
 
-tk.Label(window).grid(row=0)
-e1 = tk.Entry(window, width=30)
-e1.grid(row=0, column=0)
+# 'Add' button creation
+add_button = Button(window, text="Add", width=5, height=1, bg="yellow", command=add_button).place(x=0, y=70)
 
-tk.Button(window,
-          text='Add', bg="yellow",
-          command=show_entry_fields).grid(row=10,
-                                    column=0,
-                                    sticky=tk.W,
-                                    pady=4)
-tk.Button(window,
-          text='Quit', bg="red", command=window.quit).grid(row=10,
-                                                       column=10,
-                                                       sticky=tk.W,
-                                                       pady=4)
+# 'Quit' button creation
+quit_button = Button(window, text="Quit", width=5, height=1, bg="red", command=window.quit).place(x=260, y=70)
+
+# Creation of a label which returns the user input
+result_Label = Label(window, text="")
+result_Label.place(x=125, y=70)
 
 window.mainloop()
